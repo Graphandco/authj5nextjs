@@ -18,6 +18,23 @@ enum UserRole {
    USER
 }
 
+model Category {
+   id       String    @id @default(auto()) @map("_id") @db.ObjectId
+   name     String    @unique
+   products Product[]
+}
+
+model Product {
+   id         String   @id @default(auto()) @map("_id") @db.ObjectId
+   title      String
+   incart     Boolean  @default(false)
+   tobuy      Boolean  @default(false)
+   favorite   Boolean  @default(false)
+   image      String   @default("")
+   categoryId String   @db.ObjectId
+   category   Category @relation(fields: [categoryId], references: [id])
+}
+
 model User {
    id             String          @id @default(auto()) @map("_id") @db.ObjectId
    name           String?

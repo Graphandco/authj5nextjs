@@ -5,7 +5,8 @@ import React from "react";
 const Server = async () => {
 	const session = await auth();
 	if (!session?.user) {
-		redirect("/");
+		// redirect("/");
+		return <div>Non connecté</div>;
 	}
 	return (
 		<main className="flex h-full items-center justify-center flex-col gap-2">
