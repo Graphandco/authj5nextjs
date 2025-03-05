@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { registerUser } from "../actions/auth/register";
 import { signIn } from "next-auth/react";
 
-const Register = () => {
+const RegisterForm = () => {
 	const [error, setError] = useState("");
 
 	const handleSubmit = async (event) => {
@@ -81,4 +81,4 @@ const Register = () => {
 	);
 };
 
-export default Register;
+export default RegisterForm;
