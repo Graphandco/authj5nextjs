@@ -16,50 +16,62 @@ const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
 	const [products, setProducts] = useState([]);
 	const [categories, setCategories] = useState([]);
+	const [loading, setLoading] = useState(false);
+
+	// 🔄 Fonction pour recharger les produits et catégories
+	const refreshData = async () => {
+		setLoading(true);
+		const productData = await getAllProducts();
+		const categoryData = await getAllCategories();
+		setProducts(productData);
+		setCategories(categoryData);
+		setLoading(false);
+	};
 
 	// Charger les produits et catégories au démarrage
 	useEffect(() => {
-		const fetchData = async () => {
-			const productData = await getAllProducts();
-			const categoryData = await getAllCategories();
-			setProducts(productData);
-			setCategories(categoryData);
-		};
-		fetchData();
+		refreshData();
 	}, []);
 
-	// Ajouter un produit
+	// Ajouter un produit et recharger les données
 	const addProduct = async (formData) => {
 		const newProduct = await createProduct(formData);
 		if (!newProduct.error) {
-			setProducts((prev) => [...prev, newProduct]);
+			await refreshData();
 		}
 	};
 
-	// Supprimer un produit
+	// Supprimer un produit et recharger les données
 	const removeProduct = async (id) => {
 		const result = await deleteProduct(id);
 		if (result.success) {
-			setProducts((prev) => prev.filter((product) => product.id !== id));
+			await refreshData();
 		}
 	};
 
-	// Changer l'état "tobuy"
-	const toggleTobuy = async (id) => {
+	// Changer l'état "tobuy" et recharger les données
+	const toggleToBuy = async (id) => {
 		const product = products.find((p) => p.id === id);
 		if (!product) return;
 
-		const updatedProduct = await updateProduct(id, {
+		await updateProduct(id, {
 			tobuy: !product.tobuy,
+			incart: false,
 		});
 
-		if (!updatedProduct.error) {
-			setProducts((prev) =>
-				prev.map((p) =>
-					p.id === id ? { ...p, tobuy: updatedProduct.tobuy } : p
-				)
-			);
-		}
+		await refreshData();
+	};
+
+	// Changer l'état "inCart" et recharger les données
+	const toggleInCart = async (id) => {
+		const product = products.find((p) => p.id === id);
+		if (!product) return;
+
+		await updateProduct(id, {
+			incart: !product.incart,
+		});
+
+		await refreshData();
 	};
 
 	return (
@@ -69,7 +81,9 @@ export const ProductProvider = ({ children }) => {
 				categories,
 				addProduct,
 				removeProduct,
-				toggleTobuy,
+				toggleToBuy,
+				toggleInCart,
+				loading,
 			}}
 		>
 			{children}

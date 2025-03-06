@@ -5,9 +5,11 @@ import RegisterForm from "../../components/RegisterForm";
 const RegisterPage = () => {
 	return (
 		<div>
-			<span>RegisterPage</span>
+			<h1>Créer un compte</h1>
 			<RegisterForm />
-			<Link href="/login">S'identifier</Link>
+			<div className="mt-3">
+				<Link href="/login">S'identifier</Link>
+			</div>
 		</div>
 	);
 };

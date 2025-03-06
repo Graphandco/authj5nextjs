@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../actions/auth/register";
 import { signIn } from "next-auth/react";
+import { Button } from "./ui/button";
 
 const RegisterForm = () => {
 	const [error, setError] = useState("");
@@ -69,12 +70,9 @@ const RegisterForm = () => {
 					/>
 				</div>
 				<div className="mt-4">
-					<button
-						type="submit"
-						className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
-					>
+					<Button type="submit" className="w-full">
 						S'inscrire
-					</button>
+					</Button>
 				</div>
 			</form>
 		</div>

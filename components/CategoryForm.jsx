@@ -1,16 +1,26 @@
 "use client";
 
 import React from "react";
-import { createCategory } from "../actions/category";
+import { useCategory } from "../context/CategoryContext"; // Utilisation du contexte Category
 
 const CategoryForm = () => {
+	const { addCategory } = useCategory(); // Récupération de la fonction addCategory
+
+	// Gestion de la soumission du formulaire
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		const formData = new FormData(event.target);
+		await addCategory(formData); // Ajoute la catégorie via le contexte
+		event.target.reset(); // Réinitialisation du formulaire après ajout
+	};
+
 	return (
 		<div>
 			<form
-				action={createCategory}
+				onSubmit={handleSubmit} // Utilisation de handleSubmit
 				className="w-full flex flex-col gap-4"
 			>
-				{/* Name */}
+				{/* Nom de la catégorie */}
 				<div>
 					<label className="block text-sm font-medium text-gray-200">
 						Nom de la catégorie

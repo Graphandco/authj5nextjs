@@ -5,9 +5,13 @@ import Link from "next/link";
 const LoginPage = () => {
 	return (
 		<div>
-			<span>LoginPage</span>
+			<h1>Se connecter</h1>
 			<LoginForm />
-			<Link href="/register">Créer un compte</Link>
+			<div className="mt-3">
+				<Link className="mt-3" href="/register">
+					Créer un compte
+				</Link>
+			</div>
 		</div>
 	);
 };

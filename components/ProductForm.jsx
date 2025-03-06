@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { useProduct } from "../context/ProductContext";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const ProductForm = () => {
 	const { addProduct, categories } = useProduct();
@@ -66,34 +66,57 @@ const ProductForm = () => {
 				</div>
 
 				{/* Cases à cocher */}
-				<div className="flex flex-col gap-2">
-					<label className="flex items-center text-sm text-gray-200">
-						<input
+				<div className="flex flex-col gap-2 mt-5">
+					<div className="items-top flex space-x-2">
+						<Checkbox
+							id="incart"
 							type="checkbox"
 							name="incart"
 							value="true"
-							className="mr-2"
 						/>
-						Dans le panier
-					</label>
-					<label className="flex items-center text-sm text-gray-200">
-						<input
+						<div className="grid gap-1.5 leading-none">
+							<label
+								htmlFor="incart"
+								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+							>
+								Dans le panier
+							</label>
+						</div>
+					</div>
+
+					<div className="items-top flex space-x-2">
+						<Checkbox
+							id="tobuy"
 							type="checkbox"
 							name="tobuy"
 							value="true"
-							className="mr-2"
 						/>
-						À acheter
-					</label>
-					<label className="flex items-center text-sm text-gray-200">
-						<input
+						<div className="grid gap-1.5 leading-none">
+							<label
+								htmlFor="tobuy"
+								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+							>
+								Dans la liste de courses à acheter
+							</label>
+						</div>
+					</div>
+
+					<div className="items-top flex space-x-2">
+						<Checkbox
+							id="favorite"
 							type="checkbox"
 							name="favorite"
 							value="true"
-							className="mr-2"
 						/>
-						Favori
-					</label>
+						<div className="grid gap-1.5 leading-none">
+							<label
+								htmlFor="favorite"
+								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+							>
+								Dans les favoris
+							</label>
+						</div>
+					</div>
 				</div>
 
 				{/* Bouton de soumission */}

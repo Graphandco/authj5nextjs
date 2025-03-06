@@ -35,6 +35,7 @@ export const registerUser = async (formData) => {
 				email,
 				hashedPassword,
 				name,
+				image: null,
 				role: "USER",
 			},
 		});

@@ -2,7 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #1d1d1d;
-  color: white;
+@layer base {
+	:root {
+		/* --background: hsl(225deg 15.3% 11.85%); */
+		--background: hsl(215 35% 15%);
+		/* --foreground: hsl(49deg 85% 95%); */
+		--foreground: hsl(222 65% 82%);
+		/* --primary: hsl(49deg 94% 43%); */
+		--primary: hsl(205 70% 45%);
+		--accent: hsl(0 0% 100%);
+		--popover: hsl(224 19% 10% / 1);
+		--card: var(--popover);
+		--popover-foreground: var(--foreground);
+		/* Unchanged */
+		--card-foreground: hsl(0 0% 98%);
+		--primary-foreground: hsl(0 0% 9%);
+		--secondary: hsl(0 0% 14.9%);
+		--secondary-foreground: hsl(0 0% 98%);
+		--muted: hsl(0 0% 14.9%);
+		--muted-foreground: hsl(0 0% 63.9%);
+		--accent-foreground: hsl(0 0% 98%);
+		--destructive: hsl(0 62.8% 30.6%);
+		--destructive-foreground: hsl(0 0% 98%);
+		--border: hsl(0 0% 14.9%);
+		--input: hsl(0 0% 14.9%);
+		--ring: hsl(0 0% 83.1%);
+		--chart-1: hsl(220 70% 50%);
+		--chart-2: hsl(160 60% 45%);
+		--chart-3: hsl(30 80% 55%);
+		--chart-4: hsl(280 65% 60%);
+		--chart-5: hsl(340 75% 55%);
+		--radius: 0.5rem;
+		/* SIZES */
+		--h1: clamp(2rem, 35px + 2.5vw, 3rem);
+		--h2: clamp(1.9rem, 30px + 1vw, 2.75rem);
+		--h3: clamp(1.8rem, 20px + 2vw, 2.5rem);
+		--h4: clamp(1.6rem, 15px + 2vw, 2rem);
+		--h5: 1.4rem;
+		--h6: 1.3rem;
+		--small: 0.7rem;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+		min-height: 200vh;
+	}
+}
+h1,
+h2,
+h3 {
+	color: hsl(var(--primary));
+	font-family: var(--font-anton);
+}
+h1 {
+	font-size: var(--h1);
+	margin-block: 1.5rem 0.8rem;
 }

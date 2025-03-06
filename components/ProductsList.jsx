@@ -1,73 +1,96 @@
 "use client";
-
-import React from "react";
+import { useState } from "react";
 import { useProduct } from "../context/ProductContext";
+import ProductItem from "./ProductItem";
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
+import { getAllCategories } from "../actions/category";
+import { Button } from "./ui/button";
 
-const ProductList = () => {
-	const { products, removeProduct, toggleTobuy } = useProduct();
+const ProductList = ({ pageType }) => {
+	const { products, removeProduct, toggleToBuy, toggleInCart, categories } =
+		useProduct();
+	const [editMode, setEditMode] = useState(false);
+
+	const listingProducts =
+		pageType === "shoppingList"
+			? products.filter((product) => product.tobuy && !product.incart)
+			: products;
+	const incartProducts = products.filter(
+		(product) => product.tobuy && product.incart
+	);
 
 	return (
 		<div className="w-full">
-			<h2 className="text-2xl font-bold text-white mb-4">
-				Liste des produits
-			</h2>
-			{products.length === 0 ? (
-				<p className="text-gray-400">Aucun produit trouvé.</p>
-			) : (
-				<ul className="space-y-4">
-					{products.map((product) => (
-						<li
-							key={product.id}
-							className={`p-4 rounded-md flex justify-between items-center cursor-pointer ${
-								product.tobuy ? "bg-green-600" : "bg-gray-800"
-							}`}
-							onClick={() => toggleTobuy(product.id)}
-						>
-							<div>
-								<h3 className="text-lg font-semibold text-white">
-									{product.title}
-								</h3>
-								<p className="text-sm text-gray-400">
-									Catégorie:{" "}
-									{product.category
-										? product.category.name
-										: "Non définie"}
-								</p>
-								<p>
-									{product.incart ? "Panier" : "Pas panier"}
-								</p>
-								<p>
-									{product.tobuy ? "Acheter" : "Pas acheté"}
-								</p>
-								<p>
-									{product.favorite ? "Favori" : "Pas favori"}
-								</p>
-								<img
-									src={product.image}
-									alt={product.title}
-									className="mt-2 w-20 h-20 object-cover rounded-md"
-								/>
-								<p className="text-sm mt-2 font-bold">
-									{product.tobuy
-										? "🛒 À acheter"
-										: "❌ Non acheté"}
-								</p>
-							</div>
+			{pageType === "inventaire" && (
+				<div className="flex items-center justify-end space-x-2">
+					<Switch
+						id="edit-mode"
+						checked={!editMode}
+						onCheckedChange={() => setEditMode((prev) => !prev)}
+						className="-scale-x-100"
+					/>
+					<Label htmlFor="edit-mode">Éditer</Label>
+				</div>
+			)}
 
-							{/* Bouton de suppression */}
-							<button
-								onClick={(e) => {
-									e.stopPropagation(); // Empêcher la propagation du clic sur le produit
-									removeProduct(product.id);
-								}}
-								className="ml-4 text-red-500 hover:text-red-700"
-								title="Supprimer"
-							>
-								🗑️
-							</button>
-						</li>
-					))}
-				</ul>
+			{categories.map((cat) => (
+				<div key={cat.id} className="">
+					{/* On affiche le titre uniquement si la catégorie contient des éléments */}
+					{listingProducts?.some(
+						(product) => product.category?.id === cat.id
+					) && (
+						<div className="font-title text-size-h4 text-primary p-2 mt-8 mb-3">
+							{cat.name}
+						</div>
+					)}
+
+					{/* <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4"> */}
+					<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+						{listingProducts
+							?.filter(
+								(product) => product.category?.id === cat.id
+							)
+							.map((product) => {
+								return (
+									<ProductItem
+										key={product.id}
+										product={product}
+										pageType={pageType}
+										toggleToBuy={toggleToBuy}
+									/>
+								);
+							})}
+					</div>
+				</div>
+			))}
+
+			{pageType === "shoppingList" && (
+				<section className="mt-12">
+					<div className="font-title text-size-h5 text-white my-2">
+						Déjà dans le panier
+					</div>
+					<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 mb-5">
+						{incartProducts.map((product) => {
+							return (
+								<ProductItem
+									key={product.id}
+									pageType={pageType}
+									product={product}
+								/>
+							);
+						})}
+					</div>
+					<Button
+						onClick={() =>
+							incartProducts.forEach((shop) =>
+								toggleToBuy(shop.id, shop.tobuy)
+							)
+						}
+					>
+						Vider la liste
+					</Button>
+				</section>
 			)}
 		</div>
 	);

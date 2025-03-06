@@ -24,11 +24,11 @@ const LoginForm = () => {
 				</div>
 				<div>
 					<label className="block text-sm font-medium text-gray-200">
-						Password
+						Mot de passe
 					</label>
 					<input
 						type="password"
-						placeholder="Password"
+						placeholder="Mot de passe"
 						name="password"
 						id="password"
 						className="mt-1 w-full px-4 p-2  h-10 rounded-md border border-gray-200 bg-white text-sm text-gray-700"

@@ -44,6 +44,7 @@ export const getAllProducts = async () => {
 		const products = await db.product.findMany({
 			include: { category: true }, // Si une catégorie n'existe pas, ce champ sera `null`
 		});
+		console.log("Produits récupérés :", products);
 		return products;
 	} catch (error) {
 		console.error("Erreur lors de la récupération des produits :", error);

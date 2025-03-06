@@ -1,10 +1,30 @@
 import { Inter } from "next/font/google";
+import { Open_Sans } from "next/font/google";
+import { Anton } from "next/font/google";
+import { Lato } from "next/font/google";
+
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
-import { auth } from "../auth";
-import Navbar from "../components/Navbar";
 import { ProductProvider } from "../context/ProductContext";
+import { CategoryProvider } from "../context/CategoryContext";
+import { auth } from "../auth";
+import Header from "../components/header/Header";
+import BottomMenu from "../components/BottomMenu";
 
+const open_Sans = Open_Sans({
+	variable: "--font-open-sans",
+	subsets: ["latin"],
+});
+const lato = Lato({
+	variable: "--font-lato",
+	subsets: ["latin"],
+	weight: "400",
+});
+const anton = Anton({
+	variable: "--font-anton",
+	weight: "400",
+	subsets: ["latin"],
+});
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -17,14 +37,15 @@ export default async function RootLayout({ children }) {
 	return (
 		<SessionProvider session={session}>
 			<ProductProvider>
-				<html lang="en">
-					<body className={inter.className}>
-						<div className="mx-auto max-w-screen-lg h-screen flex flex-col">
-							<Navbar />
-							<div className="flex-grow">{children}</div>
-						</div>
-					</body>
-				</html>
+				<CategoryProvider>
+					<html lang="en">
+						<body className={`${anton.variable} antialiased`}>
+							<Header />
+							<main className="container py-5">{children}</main>
+							<BottomMenu />
+						</body>
+					</html>
+				</CategoryProvider>
 			</ProductProvider>
 		</SessionProvider>
 	);

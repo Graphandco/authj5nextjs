@@ -1,7 +1,16 @@
-export default function Home() {
+import { auth } from "../auth";
+import Homepage from "../components/Homepage";
+
+const Home = async () => {
+	const session = await auth();
+	if (!session?.user) {
+		// redirect("/");
+		return <div>Non connecté</div>;
+	}
 	return (
-		<main className="flex h-full items-center justify-center">
-			<h1 className="text-3xl">Landing page</h1>
-		</main>
+		<>
+			<Homepage />
+		</>
 	);
-}
+};
+export default Home;

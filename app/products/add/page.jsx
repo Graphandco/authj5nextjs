@@ -4,7 +4,7 @@ import ProductForm from "../../../components/ProductForm";
 const AddProduct = () => {
 	return (
 		<>
-			<div className="container mx-auto">AddProduct</div>
+			<h1 className="">Ajouter un produit</h1>
 			<ProductForm />
 		</>
 	);
