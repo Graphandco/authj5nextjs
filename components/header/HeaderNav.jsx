@@ -30,20 +30,30 @@ const HeaderNav = ({ session }) => {
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuLabel>Autres</DropdownMenuLabel>
-				<DropdownMenuItem>
+				<DropdownMenuItem asChild>
 					<Link href="/middleware">Middleware</Link>
 				</DropdownMenuItem>
-				<DropdownMenuItem>
+				<DropdownMenuItem asChild>
 					<Link href="/server">Server</Link>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
-				{session?.user && (
+				{session?.user ? (
 					<>
 						<DropdownMenuLabel>
 							{session.user.name}
 						</DropdownMenuLabel>
 						<DropdownMenuItem onClick={() => logout()}>
 							Déconnexion
+						</DropdownMenuItem>
+					</>
+				) : (
+					<>
+						<DropdownMenuLabel>Compte</DropdownMenuLabel>
+						<DropdownMenuItem asChild>
+							<Link href="/login">Se connecter</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem asChild>
+							<Link href="/register">Créer un compte</Link>
 						</DropdownMenuItem>
 					</>
 				)}

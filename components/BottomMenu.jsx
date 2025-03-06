@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Home, Warehouse, Images, Plus } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { logout } from "../actions/auth";
+
 import {
 	FiShoppingCart,
 	FiSearch,
@@ -12,7 +14,7 @@ import {
 	FiX,
 } from "react-icons/fi";
 
-const BottomMenu = () => {
+const BottomMenu = ({ session }) => {
 	const [open, setOpen] = useState(false);
 
 	const links = [
@@ -45,7 +47,7 @@ const BottomMenu = () => {
 				initial="closed"
 				className="wrapper px-0 bg-white text-black shadow-lg flex items-center justify-between "
 			>
-				<MenuButton setOpen={setOpen} open={open} />
+				<MenuButton setOpen={setOpen} open={open} session={session} />
 				<div className="flex w-full justify-between">
 					{links.map((link, index) => (
 						<Link
@@ -62,7 +64,7 @@ const BottomMenu = () => {
 					<Link className="grow" text="Support" Icon={FiPhone} />
 					<Link className="grow" text="Cart" Icon={FiShoppingCart} /> */}
 				</div>
-				<Menu />
+				<Menu session={session} />
 			</motion.nav>
 		</footer>
 	);
@@ -132,7 +134,7 @@ const MenuButton = ({ open, setOpen }) => {
 	);
 };
 
-const Menu = () => {
+const Menu = ({ session }) => {
 	return (
 		<motion.div
 			variants={menuVariants}
@@ -143,25 +145,23 @@ const Menu = () => {
 				<SectionTitle text="Produits" />
 				<MenuLink text="Inventaire" link="/inventaire" />
 				<MenuLink text="Catégories" link="/categories" />
-				<MenuLink text="Basketball" />
-				<MenuLink text="Running" />
 			</div>
 			<div className="flex flex-col gap-2 w-1/3">
-				<SectionTitle text="Women" />
-				<MenuLink text="Tops" />
-				<MenuLink text="Pants" />
-				<MenuLink text="Running" />
-				<MenuLink text="Leisure" />
-				<MenuLink text="Sports Bras" />
+				<SectionTitle text="Compte" />
+				{session?.user ? (
+					<div onClick={() => logout()}>
+						<MenuText text="Déconnexion" />
+					</div>
+				) : (
+					<>
+						<MenuLink text="Se connecter" link="/login" />
+						<MenuLink text="Créer un compte" link="/register" />
+					</>
+				)}
 			</div>
 			<div className="flex flex-col gap-2 w-1/3">
 				<SectionTitle text="Kids" />
 				<MenuLink text="Toddler" />
-				<MenuLink text="Back to school" />
-				<MenuLink text="Shirts" />
-				<MenuLink text="Shorts" />
-				<MenuLink text="Cleats" />
-				<MenuLink text="Winter" />
 			</div>
 		</motion.div>
 	);
@@ -188,6 +188,16 @@ const MenuLink = ({ text, link }) => {
 		>
 			{text}
 		</motion.a>
+	);
+};
+const MenuText = ({ text }) => {
+	return (
+		<motion.span
+			variants={menuLinkVariants}
+			className="text-sm hover:text-indigo-500 transition-colors flex items-center gap-2"
+		>
+			{text}
+		</motion.span>
 	);
 };
 

@@ -10,6 +10,7 @@ import { CategoryProvider } from "../context/CategoryContext";
 import { auth } from "../auth";
 import Header from "../components/header/Header";
 import BottomMenu from "../components/BottomMenu";
+import { Toaster } from "../components/ui/sonner";
 
 const open_Sans = Open_Sans({
 	variable: "--font-open-sans",
@@ -42,7 +43,13 @@ export default async function RootLayout({ children }) {
 						<body className={`${anton.variable} antialiased`}>
 							<Header />
 							<main className="container py-5">{children}</main>
-							<BottomMenu />
+							<Toaster
+								position="bottom-right"
+								toastOptions={{
+									className: "bg-card text-white",
+								}}
+							/>
+							<BottomMenu session={session} />
 						</body>
 					</html>
 				</CategoryProvider>

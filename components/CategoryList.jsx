@@ -1,15 +1,22 @@
 "use client";
+import { Trash2 } from "lucide-react";
 import { useCategory } from "../context/CategoryContext";
+import { toast } from "sonner";
 
 const CategoryList = () => {
-	const { categories } = useCategory();
+	const { categories, removeCategory } = useCategory();
+
+	const handleRemoveCat = (id) => {
+		removeCategory(id);
+		toast.success("La catégorie a été supprimée.");
+	};
 
 	return (
 		<div className="">
 			{categories.length === 0 ? (
 				<p className="text-white-400">Aucune catégorie trouvée.</p>
 			) : (
-				<ul className="space-y-4">
+				<ul className="">
 					{categories.map((category) => (
 						<li
 							key={category.id}
@@ -22,6 +29,12 @@ const CategoryList = () => {
 								({category.products.length} produit
 								{category.products.length > 1 && "s"})
 							</p>
+							<Trash2
+								color="var(--destructive"
+								size={18}
+								className="mt-1 cursor-pointer"
+								onClick={() => handleRemoveCat(category.id)}
+							/>
 						</li>
 					))}
 				</ul>

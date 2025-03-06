@@ -2,6 +2,8 @@
 
 import React from "react";
 import { useCategory } from "../context/CategoryContext"; // Utilisation du contexte Category
+import { toast } from "sonner";
+import { Button } from "./ui/button";
 
 const CategoryForm = () => {
 	const { addCategory } = useCategory(); // Récupération de la fonction addCategory
@@ -10,7 +12,9 @@ const CategoryForm = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const formData = new FormData(event.target);
+		console.log(formData);
 		await addCategory(formData); // Ajoute la catégorie via le contexte
+		toast.success(`La catégorie a été créée.`);
 		event.target.reset(); // Réinitialisation du formulaire après ajout
 	};
 
@@ -36,12 +40,9 @@ const CategoryForm = () => {
 
 				{/* Bouton de soumission */}
 				<div className="mt-4">
-					<button
-						type="submit"
-						className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-					>
+					<Button type="submit" className="w-full ">
 						Ajouter la catégorie
-					</button>
+					</Button>
 				</div>
 			</form>
 		</div>
