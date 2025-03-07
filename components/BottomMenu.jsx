@@ -145,6 +145,7 @@ const Menu = ({ session }) => {
 				<SectionTitle text="Produits" />
 				<MenuLink text="Inventaire" link="/inventaire" />
 				<MenuLink text="Catégories" link="/categories" />
+				<MenuLink text="Upload image" link="/upload" />
 			</div>
 			<div className="flex flex-col gap-2 w-1/3">
 				<SectionTitle text="Compte" />
