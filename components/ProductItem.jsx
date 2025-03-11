@@ -37,7 +37,7 @@ const ProductItem = ({ product, pageType, editMode }) => {
 					: !product.tobuy && toggleToBuy(product.id, product.tobuy)
 			}
 		>
-			{product.image && (
+			{/* {product.image && (
 				<Image
 					src={`/images/items/${product.image}`}
 					width={32}
@@ -46,7 +46,7 @@ const ProductItem = ({ product, pageType, editMode }) => {
 					className="mx-auto"
 					quality={75}
 				/>
-			)}
+			)} */}
 			<div className="text-[.9rem]">{product.title}</div>
 			{product.favorite && (
 				<div className="absolute top-2 right-2">

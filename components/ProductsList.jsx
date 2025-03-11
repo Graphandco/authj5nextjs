@@ -4,7 +4,6 @@ import { useProduct } from "../context/ProductContext";
 import ProductItem from "./ProductItem";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
-import { getAllCategories } from "../actions/category";
 import { Button } from "./ui/button";
 
 const ProductList = ({ pageType }) => {

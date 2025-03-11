@@ -10,6 +10,7 @@
 		--foreground: hsl(222 65% 82%);
 		/* --primary: hsl(49deg 94% 43%); */
 		--primary: hsl(205 70% 45%);
+		--secondary: hsl(205 70% 35%);
 		--accent: hsl(0 0% 100%);
 		--popover: hsl(224 19% 10% / 1);
 		--card: var(--popover);
@@ -17,7 +18,6 @@
 		--primary-foreground: hsl(0 0% 100%);
 		/* Unchanged */
 		--card-foreground: hsl(0 0% 98%);
-		--secondary: hsl(0 0% 14.9%);
 		--secondary-foreground: hsl(0 0% 98%);
 		--muted: hsl(0 0% 14.9%);
 		--muted-foreground: hsl(0 0% 63.9%);

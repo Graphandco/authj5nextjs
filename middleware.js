@@ -13,8 +13,10 @@ export default async function middleware(request) {
 	);
 
 	if (!session && isProtected) {
-		const absoluteURL = new URL("/", request.nextUrl.origin);
-		return NextResponse.redirect(absoluteURL.toString());
+		return new NextResponse(JSON.stringify({ error: "Non autorisé" }), {
+			status: 401,
+			headers: { "Content-Type": "application/json" },
+		});
 	}
 
 	return NextResponse.next();
